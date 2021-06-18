@@ -1,6 +1,60 @@
 #include "vector.class.hpp"
 #include <vector>
 
+void testSwap() {
+	std::vector<int> v1(12,4);
+	std::vector<int> v2(10, 7);
+	ft::Vector<int> g1(12, 4);
+//	ft::Vector<int>::iterator it = g1.begin();
+//	std::cout << *it;
+	ft::Vector<int> g2(10, 7);
+	for (int i = 0; i < 3; i++) {
+		v1.push_back(8);
+		g1.push_back(8);
+	}
+	std::cout << "==----SWAP TEST----=" << std::endl;
+	std::cout << "==----Default vector before v1----==" << std::endl;
+	std::cout << "size: " << v1.size() << "\t" << "capacity: " << v1.capacity() << std::endl;
+	std::cout << "front: " << v1.front() << "\t" << "back: " << v1.back() << std::endl;
+	std::cout << "==----Default vector before v2----==" << std::endl;
+	std::cout << "size: " << v2.size() << "\t" << "capacity: " << v2.capacity() << std::endl;
+	std::cout << "front: " << v2.front() << "\t" << "back: " << v2.back() << std::endl;
+	v1.swap(v2);
+	std::cout << "==----Default vector after v1----==" << std::endl;
+	std::cout << "size: " << v1.size() << "\t" << "capacity: " << v1.capacity() << std::endl;
+	std::cout << "front: " << v1.front() << "\t" << "back: " << v1.back() << std::endl;
+	std::cout << "==----Default vector after v2----==" << std::endl;
+	std::cout << "size: " << v2.size() << "\t" << "capacity: " << v2.capacity() << std::endl;
+	std::cout << "front: " << v2.front() << "\t" << "back: " << v2.back() << std::endl;
+	std::cout << "==----My vector before g1----==" << std::endl;
+	std::cout << "size: " << g1.size() << "\t" << "capacity: " << g1.capacity() << std::endl;
+	std::cout << "front: " << g1.front() << "\t" << "back: " << g1.back() << std::endl;
+	std::cout << "==----My vector before g2----==" << std::endl;
+	std::cout << "size: " << g2.size() << "\t" << "capacity: " << g2.capacity() << std::endl;
+	std::cout << "front: " << g2.front() << "\t" << "back: " << g2.back() << std::endl;
+	g1.swap(g2);
+	std::cout << "==----My vector after g1----==" << std::endl;
+	std::cout << "size: " << g1.size() << "\t" << "capacity: " << g1.capacity() << std::endl;
+	std::cout << "front: " << g1.front() << "\t" << "back: " << g1.back() << std::endl;
+	std::cout << "==----My vector after g2----==" << std::endl;
+	std::cout << "size: " << g2.size() << "\t" << "capacity: " << g2.capacity() << std::endl;
+	std::cout << "front: " << g2.front() << "\t" << "back: " << g2.back() << std::endl;
+}
+
+void testModifies() {
+	std::vector<int> v1(12,4);
+	ft::Vector<int> g1(12, 4);
+	v1.assign(14, 2);
+	g1.assign(14, 2);
+	std::cout << "==----ASSIGN TEST----=" << std::endl;
+	std::cout << "==----Default vector----==" << std::endl;
+	std::cout << "size: " << v1.size() << "\t" << "capacity: " << v1.capacity() << std::endl;
+	std::cout << "front: " << v1.front() << "\t" << "back: " << v1.back() << std::endl;
+	std::cout << "==----My vector----==" << std::endl;
+	std::cout << "size: " << g1.size() << "\t" << "capacity: " << g1.capacity() << std::endl;
+	std::cout << "front: " << g1.front() << "\t" << "back: " << g1.back() << std::endl;
+}
+
 void testFrontAndBack() {
 	std::vector<const int> v1(12,4);
 	std::vector<const int> v2(v1);
@@ -115,11 +169,48 @@ void testVector() {
 	}
 }
 
+void testIteratorVector() {
+	std::cout << "==----TEST ITERATOR VECTOR----==\n";
+	std::cout << "My vector\n";
+	ft::Vector<int> g1;
+	for (int i = 0; i < 12; i++) {
+		g1.push_back(i + 1);
+	}
+	ft::Vector<int>::iterator ite = g1.begin();
+	std::cout << ite[0] << std::endl;
+	ite += 4;
+	if (ite > g1.begin())
+		std::cout << "BIG\n";
+	std::cout << ite[0] << std::endl;
+	ite -= 4;
+	if (ite <= g1.begin())
+		std::cout << "SMALL\n";
+	std::cout << ite[0] << std::endl;
+	std::cout << "Default vector\n";
+	std::vector<int> v1;
+	for (int i = 0; i < 12; i++) {
+		v1.push_back(i + 1);
+	}
+	std::vector<int>::iterator it = v1.begin();
+	std::cout << it[0] << std::endl;
+	it += 4;
+	if (it > v1.begin())
+		std::cout << "BIG\n";
+	std::cout << it[0] << std::endl;
+	it -= 4;
+	if (it <= v1.begin())
+		std::cout << "SMALL\n";
+	std::cout << it[0] << std::endl;
+}
+
 int main() {
-	testVector();
-	testPushBack();
-	testElementAccess();
-	testFrontAndBack();
+//	testVector();
+//	testPushBack();
+//	testElementAccess();
+//	testFrontAndBack();
+//	testModifies();
+//	testSwap();
+	testIteratorVector();
 //	while (1);
 	return 0;
 }
