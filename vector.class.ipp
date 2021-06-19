@@ -212,6 +212,16 @@ const T& ft::Vector<T, Alloc >::back() const {
  */
 
 template<typename T, class Alloc >
+void ft::Vector<T, Alloc>::assign(iterator first, iterator last) {
+    this->clear();
+    size_t n(0);
+    for (iterator it = first; it < last; it++) {
+        n++;
+        std::cout << *it;
+    }
+}
+
+template<typename T, class Alloc >
 void ft::Vector<T, Alloc>::assign(size_t n, const T &x) {
 	this->clear();
 	if (n > _capacity) {

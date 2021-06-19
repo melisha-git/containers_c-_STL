@@ -41,8 +41,7 @@ namespace ft {
 		T& back();
 		const T& back() const;
 
-//		template <class InputIterator>
-//		void assign (InputIterator first, InputIterator last);
+        void assign (iterator first, iterator last);
 		void assign (size_t n, const T& val);
 		//iterator insert (iterator position, const value_type& val);
 		//void insert (iterator position, size_type n, const value_type& val);
