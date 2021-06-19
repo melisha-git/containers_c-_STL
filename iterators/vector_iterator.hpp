@@ -10,6 +10,11 @@ namespace ft {
 		vector_iterator(T* val = 0);
 		vector_iterator(const vector_iterator<T>& copy);
 		~vector_iterator() {}
+		vector_iterator operator++();
+		vector_iterator operator++(int);
+		vector_iterator operator--();
+		vector_iterator operator--(int);
+		T &operator*() const { return *_value; }
 		T &operator[](int index);
 		T &operator+=(int n);
 		T &operator-=(int n);
@@ -17,6 +22,10 @@ namespace ft {
 		bool operator<(const vector_iterator<T> &) const;
 		bool operator>=(const vector_iterator<T> &) const;
 		bool operator<=(const vector_iterator<T> &) const;
+		bool operator!=(const vector_iterator<T> &) const;
+		bool operator==(const vector_iterator<T> &) const;
+		vector_iterator operator-(int n);
+		vector_iterator operator+(int n);
 	};
 }
 

@@ -46,7 +46,7 @@ ft::Vector<T, Alloc >::~Vector() {
 //get size
 
 template<typename T, class Alloc >
-size_t ft::Vector<T, Alloc>::size() {
+size_t ft::Vector<T, Alloc>::size() const {
 	return _size;
 }
 
@@ -156,10 +156,35 @@ const T& ft::Vector<T, Alloc>::operator[](size_t n) const {
 
 //Оператор =
 
+/*
+ * template<typename T, class Alloc >
+ft::Vector<T, Alloc>::Vector(const Vector & other) : _size(other._size), _capacity(other._capacity) {
+	_array = _alloc.allocate(other._size);
+	for (size_t i = 0; i != other._size; i++)
+		_alloc.construct(&_array[i], other._array[i]);
+}
+
+//Destructor
+
+template<typename T, class Alloc >
+ft::Vector<T, Alloc >::~Vector() {
+	for (size_t i = 0; i < _size; i++) {
+		_alloc.destroy(&_array[i]);
+	}
+	_alloc.deallocate(_array, this->_capacity);
+}
+ */
+
 template<typename T, class Alloc >
 ft::Vector<T, Alloc> & ft::Vector<T,  Alloc>::operator=(const Vector <T, Alloc> &x) {
-	Vector<T> copy(x);
-	this->swap(copy);
+	this->clear();
+	this->~Vector();
+	_size = x._size;
+	_capacity = x._capacity;
+	_array = _alloc.allocate(x._size);
+	for (size_t i = 0; i < x._size; i++) {
+		_alloc.construct(&_array[i], x._array[i]);
+	}
 	return *this;
 }
 
@@ -217,8 +242,19 @@ void ft::Vector<T, Alloc>::assign(iterator first, iterator last) {
     size_t n(0);
     for (iterator it = first; it < last; it++) {
         n++;
-        std::cout << *it;
+//        std::cout << *it;
     }
+	if (n > _capacity) {
+		_alloc.deallocate(_array, _capacity);
+		_array = _alloc.allocate(n);
+		_capacity = n;
+	}
+	int i = 0;
+	for (iterator it = first; it < last; it++) {
+		_alloc.construct(&_array[i], *it);
+		i++;
+	}
+	_size = n;
 }
 
 template<typename T, class Alloc >
@@ -237,10 +273,7 @@ void ft::Vector<T, Alloc>::assign(size_t n, const T &x) {
 
 template<typename T, class Alloc >
 void ft::Vector<T, Alloc>::swap(Vector <T, Alloc> &x) {
-	std::swap(_alloc, x._alloc);
-	std::swap(_array, x._array);
-	std::swap(_size, x._size);
-	std::swap(_capacity, x._capacity);
+	ft::swap(*this, x);
 }
 
 /*
@@ -256,7 +289,60 @@ Alloc ft::Vector<T, Alloc>::get_allocator() const {
  * iterators
  */
 
-//template<typename T, class Alloc >
-//ft::Vector<T, Alloc>::iterator ft::Vector<T, Alloc>::begin() {
-//	return iterator(_array[0]);
-//}
+template<typename T, class Alloc >
+ft::vector_iterator<T> ft::Vector<T, Alloc>::insert(ft::vector_iterator<T> position, const T& val) {
+	Vector copy(*this);
+	if (_size >= _capacity) {
+		reserve(!_capacity ? 1 : _capacity * 2);
+	}
+	this->clear();
+	iterator it = this->begin();
+	int flag = 0;
+	for (size_t i = 0; i < copy._size + 1; i++) {
+		if (it == position) {
+			_alloc.construct(&_array[i], val);
+			flag = 1;
+		}
+		else if (flag == 1)
+			_alloc.construct(&_array[i], copy[i - 1]);
+		++it;
+	}
+	_size = copy.size() + 1;
+	return position;
+}
+
+template<typename T, class Alloc >
+void ft::Vector<T, Alloc>::insert(ft::vector_iterator<T> position, size_t n, const T& val) {
+	for (size_t i = 0; i < n; i++) {
+		this->insert(position, val);
+	}
+}
+
+template<typename T, class Alloc >
+void ft::Vector<T, Alloc>::insert(ft::vector_iterator<T> position, ft::vector_iterator<T> first, ft::vector_iterator<T> last) {
+	while (first < last) {
+		this->insert(position, *first);
+		++position;
+		++first;
+	}
+}
+
+template<typename T, class Alloc >
+ft::vector_iterator<T> ft::Vector<T, Alloc>::erase(iterator position) {
+	iterator save = position;
+	while (save < position) {
+		*save = *(save + 1);
+		save++;
+	}
+	_size--;
+	return position;
+}
+
+template<typename T, class Alloc >
+ft::vector_iterator<T> ft::Vector<T, Alloc>::erase(ft::vector_iterator<T> first, ft::vector_iterator<T> last) {
+	while (first != last) {
+		this->erase(first);
+		last--;
+	}
+	return first;
+}

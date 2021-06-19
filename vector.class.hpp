@@ -5,6 +5,16 @@
 #include "iterators/vector_iterator.hpp"
 
 namespace ft {
+	template <typename U>
+	void swap(U& a, U&b)
+	{
+		U tmp = a;
+		a = b;
+		b = tmp;
+	}
+}
+
+namespace ft {
     template<typename T, class Alloc = std::allocator<T> >
     class Vector {
 	private:
@@ -19,7 +29,7 @@ namespace ft {
         Vector(const Vector &);
         ~Vector();
 
-        size_t size();
+        size_t size() const;
         size_t capacity();
         size_t max_size();
 		bool empty() const;
@@ -43,27 +53,105 @@ namespace ft {
 
         void assign (iterator first, iterator last);
 		void assign (size_t n, const T& val);
-		//iterator insert (iterator position, const value_type& val);
-		//void insert (iterator position, size_type n, const value_type& val);
-		//template <class InputIterator>
-		//    void insert (iterator position, InputIterator first, InputIterator last);
-		//iterator erase (iterator position);
-		//iterator erase (iterator first, iterator last);
+		iterator insert (iterator position, const T& val);
+		void insert (iterator position, size_t n, const T& val);
+		void insert (iterator position, iterator first, iterator last);
+		iterator erase(iterator position);
+		iterator erase (iterator first, iterator last);
 		void swap (Vector& x);
 
 		Alloc get_allocator() const;
-//		friend bool operator== (const Vector<T,Alloc>& lhs, const Vector<T,Alloc>& rhs);
 
-		iterator begin() { return iterator(_array); }
-		iterator end() { return iterator(_array + _size); }
+		iterator begin() const { return iterator(_array); }
+		iterator end() const { return iterator(_array + _size); }
+
+
+		friend bool operator==(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+			if (lhs.size() != rhs.size())
+				return false;
+			iterator itl = lhs.begin();
+			iterator itr = rhs.begin();
+			for (; itl < lhs.end(); ++itl, ++itr) {
+				if (*itl != *itr)
+					return false;
+			}
+			return true;
+		}
+		friend bool operator!=(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+			if (lhs.size() != rhs.size())
+				return true;
+			iterator itl = lhs.begin();
+			iterator itr = rhs.begin();
+			for (; itl < lhs.end(); ++itl, ++itr) {
+				if (*itl != *itr)
+					return true;
+			}
+			return false;
+		}
+		friend bool operator<(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+			if (lhs.size() < rhs.size())
+				return true;
+			iterator itl = lhs.begin();
+			iterator itr = rhs.begin();
+			for (; itl < lhs.end(); ++itl, ++itr) {
+				if (*itl != *itr) {
+					if (*itl < *itr)
+						return true;
+					else
+						return false;
+				}
+			}
+			return false;
+		}
+		friend bool operator>(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+			if (lhs.size() > rhs.size())
+				return true;
+			iterator itl = lhs.begin();
+			iterator itr = rhs.begin();
+			for (; itl < lhs.end(); ++itl, ++itr) {
+				if (*itl != *itr) {
+					if (*itl > *itr)
+						return true;
+					else
+						return false;
+				}
+			}
+			return false;
+		}
+		friend bool operator<=(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+			if (lhs.size() < rhs.size())
+				return true;
+			iterator itl = lhs.begin();
+			iterator itr = rhs.begin();
+			for (; itl < lhs.end(); ++itl, ++itr) {
+				if (*itl != *itr) {
+					if (*itl < *itr)
+						return true;
+					else
+						return false;
+				}
+			}
+			return true;
+		}
+		friend bool operator>=(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+			if (lhs.size() > rhs.size())
+				return true;
+			iterator itl = lhs.begin();
+			iterator itr = rhs.begin();
+			for (; itl < lhs.end(); ++itl, ++itr) {
+				if (*itl != *itr) {
+					if (*itl > *itr)
+						return true;
+					else
+						return false;
+				}
+			}
+			return true;
+		}
+		friend void swap(Vector<T,Alloc>& x, Vector<T,Alloc>& y) {
+			ft::swap(x, y);
+		}
     };
-}
-
-template <class T, class Alloc>
-bool operator== (const ft::Vector<T, Alloc>& lhs, const ft::Vector<T, Alloc>& rhs){
-	if (lhs.size() != rhs.size())
-		return false;
-	return true;
 }
 
 #include "vector.class.ipp"
