@@ -48,15 +48,15 @@ namespace ft {
 		void resize (size_t n, T x = T());
 
 		Vector& operator=(const Vector& x);
-        T& operator[](size_t n);
-		const T& operator[] (size_t n) const;
+		reference operator[](size_t n);
+		const reference operator[] (size_t n) const;
 
-		T& at(size_t n);
-		const T& at (size_t n) const;
-		T& front();
-		const T& front() const;
-		T& back();
-		const T& back() const;
+		reference at(size_t n);
+		const reference at (size_t n) const;
+		reference front();
+		const reference front() const;
+		reference back();
+		const reference back() const;
 
         void assign (iterator first, iterator last);
 		void assign (size_t n, const T& val);
@@ -67,7 +67,7 @@ namespace ft {
 		iterator erase (iterator first, iterator last);
 		void swap (Vector& x);
 
-		Alloc get_allocator() const;
+		allocator_type get_allocator() const;
 
 		const_reverse_iterator rbegin()  const   { return const_reverse_iterator(_array + _size - 1); }
 		const_reverse_iterator rend()	const	  { return const_reverse_iterator(_array - 1); }
