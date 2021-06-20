@@ -23,7 +23,7 @@ T &ft::vector_iterator<T>::operator[](int index) const {
 		return ref;
 	}
 	T* tmp(this->_value);
-	for (size_t i = 0; i < index; tmp++, i++);
+	for (int i = 0; i < index; tmp++, i++);
 	return *tmp;
 }
 

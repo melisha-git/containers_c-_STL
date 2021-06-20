@@ -127,7 +127,7 @@ void testVector() {
 	}
 	v1.resize(14);
 	std::cout << v1.size() << "\t" << v1.capacity() << std::endl;
-	for (int i = 0; i < v1.size(); i++) {
+	for (size_t i = 0; i < v1.size(); i++) {
 		std::cout << v1[i];
 	}
 
@@ -147,7 +147,7 @@ void testVector() {
 	}
 	g1.resize(14);
 	std::cout << g1.size() << "\t" << g1.capacity() << std::endl;
-	for (int i = 0; i < g1.size(); i++) {
+	for (size_t i = 0; i < g1.size(); i++) {
 		std::cout << g1[i];
 	}
 	std::cout << std::endl;
@@ -311,14 +311,14 @@ void testInsertIterator() {
 	std::cout << "\x1b[31mDEFAULT vector after\n";
 	std::vector<int>::iterator it = v1.end();
 	v1.insert(it, it - 4, it);
-	for (int i = 0; i < v1.size(); i++) {
+	for (size_t i = 0; i < v1.size(); i++) {
 		std::cout << v1[i];
 	}
 	std::cout << std::endl;
 	std::cout << "\x1b[32mMy vector after\n";
 	ft::Vector<int>::iterator ite = g1.end();
 	g1.insert(ite, (ite - 4), ite);
-	for (int i = 0; i < g1.size(); i++) {
+	for (size_t i = 0; i < g1.size(); i++) {
 		std::cout << g1[i];
 	}
 	std::cout << std::endl;
@@ -326,7 +326,7 @@ void testInsertIterator() {
 	std::cout << "\x1b[31mDEFAULT vector\n";
 	it = v1.end() - 2;
 	std::cout << "erase return: " << *(v1.erase(it - 3, it + 2)) << std::endl;
-	for (int i = 0; i < v1.size(); i++) {
+	for (size_t i = 0; i < v1.size(); i++) {
 		std::cout << v1[i];
 	}
 	std::cout << std::endl;
@@ -334,7 +334,7 @@ void testInsertIterator() {
 	ite = g1.end() - 2;
 	ft::Vector<int>::iterator itr = g1.erase(ite - 3, ite + 2);
 	std::cout << "erase return: " << *itr << std::endl;
-	for (int i = 0; i < g1.size(); i++) {
+	for (size_t i = 0; i < g1.size(); i++) {
 		std::cout << g1[i];
 	}
 	std::cout << std::endl;

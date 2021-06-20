@@ -19,14 +19,11 @@ namespace ft {
     template<typename T, class Alloc = std::allocator<T> >
     class Vector {
 	private:
-    	Alloc _alloc;
     	T *_array;
     	size_t _size;
     	size_t _capacity;
+    	Alloc _alloc;
     public:
-    	typedef T value_type;
-    	typedef Alloc allocator_type;
-    	typedef value_type& reference;
     	typedef typename ft::const_vector_reverse_iterator<T> const_reverse_iterator;
     	typedef typename ft::vector_reverse_iterator<T> reverse_iterator;
 		typedef typename ft::vector_iterator<T> iterator;
@@ -48,15 +45,15 @@ namespace ft {
 		void resize (size_t n, T x = T());
 
 		Vector& operator=(const Vector& x);
-		reference operator[](size_t n);
-		const reference operator[] (size_t n) const;
+        T& operator[](size_t n);
+		const T& operator[] (size_t n) const;
 
-		reference at(size_t n);
-		const reference at (size_t n) const;
-		reference front();
-		const reference front() const;
-		reference back();
-		const reference back() const;
+		T& at(size_t n);
+		const T& at (size_t n) const;
+		T& front();
+		const T& front() const;
+		T& back();
+		const T& back() const;
 
         void assign (iterator first, iterator last);
 		void assign (size_t n, const T& val);
@@ -67,7 +64,7 @@ namespace ft {
 		iterator erase (iterator first, iterator last);
 		void swap (Vector& x);
 
-		allocator_type get_allocator() const;
+		Alloc get_allocator() const;
 
 		const_reverse_iterator rbegin()  const   { return const_reverse_iterator(_array + _size - 1); }
 		const_reverse_iterator rend()	const	  { return const_reverse_iterator(_array - 1); }
