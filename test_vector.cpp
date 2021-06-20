@@ -369,3 +369,30 @@ void testRelationalOperators() {
 		std::cout << "g3 < g1\n";
 	}
 }
+
+void testReverseIterators() {
+	std::cout << "\x1b[34m==----REVERSE ITERATOR TEST----==\n";
+	std::vector<int> v;
+	const ft::Vector<int> r(13,4);
+	ft::Vector<int> g;
+	for (int i = 0; i < 5; i++) {
+		g.push_back(i);
+		v.push_back(i);
+	}
+	std::cout << "\x1b[31mDEFAULR VECTOR\n";
+	std::vector<int>::reverse_iterator it = v.rbegin();
+	ft::Vector<int>::reverse_iterator ite = g.rbegin();
+	for (; it < v.rend(); ++it) {
+		std::cout << *it;
+	}
+	std::cout << std::endl;
+	std::cout << it[-4];
+	std::cout << std::endl;
+	std::cout << "\x1b[32mMY VECTOR\n";
+	for (;ite < g.rend(); ++ite) {
+		std::cout << *ite;
+	}
+	std::cout << std::endl;
+	std::cout << ite[-4];
+	std::cout << std::endl;
+}

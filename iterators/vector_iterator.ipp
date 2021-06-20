@@ -28,13 +28,19 @@ T &ft::vector_iterator<T>::operator[](int index) const {
 }
 
 template<typename T>
-T &ft::vector_iterator<T>::operator+=(int n) {
-	return *(_value += n);
+ft::vector_iterator<T> &ft::vector_iterator<T>::operator+=(int n) {
+	for (;n > 0; n--) {
+		_value++;
+	}
+	return *this;
 }
 
 template<typename T>
-T &ft::vector_iterator<T>::operator-=(int n) {
-	return *(_value -= n);
+ft::vector_iterator<T> &ft::vector_iterator<T>::operator-=(int n) {
+	for (;n > 0; n--) {
+		_value--;
+	}
+	return *this;
 }
 
 template<typename T>

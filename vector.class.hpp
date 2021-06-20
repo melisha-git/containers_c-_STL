@@ -15,6 +15,7 @@ namespace ft {
 }
 
 namespace ft {
+	// CLASS VECTOR
     template<typename T, class Alloc = std::allocator<T> >
     class Vector {
 	private:
@@ -23,6 +24,8 @@ namespace ft {
     	size_t _size;
     	size_t _capacity;
     public:
+    	typedef typename ft::const_vector_reverse_iterator<T> const_reverse_iterator;
+    	typedef typename ft::vector_reverse_iterator<T> reverse_iterator;
 		typedef typename ft::vector_iterator<T> iterator;
 		typedef typename ft::const_vector_iterator<T> const_iterator;
         explicit Vector();
@@ -63,6 +66,10 @@ namespace ft {
 
 		Alloc get_allocator() const;
 
+		const_reverse_iterator rbegin()  const   { return const_reverse_iterator(_array + _size - 1); }
+		const_reverse_iterator rend()	const	  { return const_reverse_iterator(_array - 1); }
+		reverse_iterator rbegin()     { return reverse_iterator(_array + _size - 1); }
+		reverse_iterator rend()		  { return reverse_iterator(_array - 1); }
 		iterator        begin()       { return iterator(_array); }
 		const_iterator  begin() const { return const_iterator(_array); }
 		iterator        end()         { return iterator(_array + _size); }
