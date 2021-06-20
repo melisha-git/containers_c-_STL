@@ -24,6 +24,9 @@ namespace ft {
     	size_t _size;
     	size_t _capacity;
     public:
+    	typedef T value_type;
+    	typedef Alloc allocator_type;
+    	typedef value_type& reference;
     	typedef typename ft::const_vector_reverse_iterator<T> const_reverse_iterator;
     	typedef typename ft::vector_reverse_iterator<T> reverse_iterator;
 		typedef typename ft::vector_iterator<T> iterator;
