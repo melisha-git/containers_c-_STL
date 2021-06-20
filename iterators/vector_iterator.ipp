@@ -9,7 +9,15 @@ ft::vector_iterator<T>::vector_iterator(const vector_iterator<T>& copy) {
 }
 
 template<typename T>
-T &ft::vector_iterator<T>::operator[](int index) {
+ft::vector_iterator<T> &ft::vector_iterator<T>::operator=(const ft::vector_iterator<T> &other) {
+	if (this != &other) {
+		_value = other._value;
+	}
+	return *this;
+}
+
+template<typename T>
+T &ft::vector_iterator<T>::operator[](int index) const {
 	if (_value == 0 || index < 0) {
 		T ref = 0;
 		return ref;
@@ -86,7 +94,7 @@ ft::vector_iterator<T> ft::vector_iterator<T>::operator--(int) {
 }
 
 template<typename T>
-ft::vector_iterator<T> ft::vector_iterator<T>::operator-(int n) {
+ft::vector_iterator<T> ft::vector_iterator<T>::operator-(int n) const {
 	vector_iterator copy(*this);
 	for (int i = 0; i < n; i++) {
 		--(copy);
@@ -95,10 +103,43 @@ ft::vector_iterator<T> ft::vector_iterator<T>::operator-(int n) {
 }
 
 template<typename T>
-ft::vector_iterator<T> ft::vector_iterator<T>::operator+(int n) {
+ft::vector_iterator<T> ft::vector_iterator<T>::operator+(int n) const {
 	vector_iterator copy(*this);
 	for (int i = 0; i < n; i++) {
 		++(copy);
 	}
 	return (copy);
+}
+
+
+template<typename T>
+ft::const_vector_iterator<T>::const_vector_iterator() {}
+
+template<typename T>
+ft::const_vector_iterator<T>::const_vector_iterator(T *value) {
+	this->_value = value;
+}
+
+template<typename T>
+ft::const_vector_iterator<T>::const_vector_iterator(const const_vector_iterator &other) {
+	this->_value = other._value;
+}
+
+template<typename T>
+ft::const_vector_iterator<T>::~const_vector_iterator() {}
+
+template<typename T>
+ft::const_vector_iterator<T> &ft::const_vector_iterator<T>::operator=(const const_vector_iterator &other) {
+	this->_value = other._value;
+	return *this;
+}
+
+template<typename T>
+const T &ft::const_vector_iterator<T>::operator*() {
+	return *this->_value;
+}
+
+template<typename T>
+const T &ft::const_vector_iterator<T>::operator[](int n) const {
+	return this->_value[n];
 }

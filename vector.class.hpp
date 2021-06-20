@@ -24,6 +24,7 @@ namespace ft {
     	size_t _capacity;
     public:
 		typedef typename ft::vector_iterator<T> iterator;
+		typedef typename ft::const_vector_iterator<T> const_iterator;
         explicit Vector();
 		explicit Vector(size_t n, const T &x = T(), const Alloc &alloc = Alloc());
         Vector(const Vector &);
@@ -62,8 +63,10 @@ namespace ft {
 
 		Alloc get_allocator() const;
 
-		iterator begin() const { return iterator(_array); }
-		iterator end() const { return iterator(_array + _size); }
+		iterator        begin()       { return iterator(_array); }
+		const_iterator  begin() const { return const_iterator(_array); }
+		iterator        end()         { return iterator(_array + _size); }
+		const_iterator  end() const   { return const_iterator(_array + _size); }
 
 
 		friend bool operator==(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
@@ -106,8 +109,8 @@ namespace ft {
 		friend bool operator>(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
 			if (lhs.size() > rhs.size())
 				return true;
-			iterator itl = lhs.begin();
-			iterator itr = rhs.begin();
+			const_iterator itl = lhs.begin();
+			const_iterator itr = rhs.begin();
 			for (; itl < lhs.end(); ++itl, ++itr) {
 				if (*itl != *itr) {
 					if (*itl > *itr)
@@ -136,8 +139,8 @@ namespace ft {
 		friend bool operator>=(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
 			if (lhs.size() > rhs.size())
 				return true;
-			iterator itl = lhs.begin();
-			iterator itr = rhs.begin();
+			const_iterator itl = lhs.begin();
+			const_iterator itr = rhs.begin();
 			for (; itl < lhs.end(); ++itl, ++itr) {
 				if (*itl != *itr) {
 					if (*itl > *itr)
