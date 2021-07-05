@@ -185,7 +185,7 @@ namespace ft {
 		explicit Vector() : _array(nullptr), _size(0), _capacity(0) {
 			_array = _alloc.allocate(_capacity);
 		}
-		Vector(size_t n, const bool &x = bool(), const Alloc &alloc = Alloc()) {
+		Vector(size_t n, const bool &x = bool(), const Alloc &alloc = Alloc()) : _alloc(alloc) {
 			_size = 0;
 			_capacity = 0;
 			_array = _alloc.allocate(_capacity);
