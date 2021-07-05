@@ -154,27 +154,6 @@ const T& ft::Vector<T, Alloc>::operator[](size_t n) const {
 	return  _array[n];
 }
 
-//Оператор =
-
-/*
- * template<typename T, class Alloc >
-ft::Vector<T, Alloc>::Vector(const Vector & other) : _size(other._size), _capacity(other._capacity) {
-	_array = _alloc.allocate(other._size);
-	for (size_t i = 0; i != other._size; i++)
-		_alloc.construct(&_array[i], other._array[i]);
-}
-
-//Destructor
-
-template<typename T, class Alloc >
-ft::Vector<T, Alloc >::~Vector() {
-	for (size_t i = 0; i < _size; i++) {
-		_alloc.destroy(&_array[i]);
-	}
-	_alloc.deallocate(_array, this->_capacity);
-}
- */
-
 template<typename T, class Alloc >
 ft::Vector<T, Alloc> & ft::Vector<T,  Alloc>::operator=(const Vector <T, Alloc> &x) {
 	this->clear();
@@ -242,7 +221,6 @@ void ft::Vector<T, Alloc>::assign(iterator first, iterator last) {
     size_t n(0);
     for (iterator it = first; it < last; it++) {
         n++;
-//        std::cout << *it;
     }
 	if (n > _capacity) {
 		_alloc.deallocate(_array, _capacity);
@@ -250,9 +228,8 @@ void ft::Vector<T, Alloc>::assign(iterator first, iterator last) {
 		_capacity = n;
 	}
 	int i = 0;
-	for (iterator it = first; it < last; it++) {
+	for (iterator it = first; it < last; i++, it++) {
 		_alloc.construct(&_array[i], *it);
-		i++;
 	}
 	_size = n;
 }

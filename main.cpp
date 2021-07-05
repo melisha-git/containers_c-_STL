@@ -1,5 +1,6 @@
 #include <string>
 #include <cstdlib>
+#include <iostream>
 
 void testSwap();
 void testModifies();
@@ -11,9 +12,12 @@ void testIteratorVector();
 void testIteratorTwo();
 void testAssignIterator();
 void testInsertIterator();
-void clearConsole();
 void testRelationalOperators();
 void testReverseIterators();
+
+void clearConsole() {
+	std::cout << "\x1b[0m";
+}
 
 int main(int argc, char **argv) {
 	if (argc == 1) {

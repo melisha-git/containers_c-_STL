@@ -344,10 +344,6 @@ void testInsertIterator() {
 	std::cout << "size = " << g1.size() << " cap = " << g1.capacity() << std::endl;
 }
 
-void clearConsole() {
-	std::cout << "\x1b[0m";
-}
-
 void testRelationalOperators() {
 	std::cout << "\x1b[34m==----TEST RELATION OPERATORS----==\n";
 	ft::Vector<int> g1(34,6);
