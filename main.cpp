@@ -1,8 +1,8 @@
 #include <string>
-#include <cstdlib>
+#include "map.class.hpp"
 #include <iostream>
+#include <map>
 #include <vector>
-#include "vector.class.hpp"
 
 void testSwap();
 void testModifies();
@@ -22,6 +22,14 @@ void clearConsole() {
 	std::cout << "\x1b[0m";
 }
 
+//map - по ключу искать значение (Красно - черное дерево)
+
+void testMap() {
+	ft::map<int, int> k;
+	std::cout << k[1];
+	std::cout << k[1];
+}
+
 int main(int argc, char **argv) {
 	if (argc == 1) {
 		return 0;
@@ -37,5 +45,7 @@ int main(int argc, char **argv) {
 			clearConsole();
 		}
 	}
+	testMap();
+//		while (1);
     return 0;
 }

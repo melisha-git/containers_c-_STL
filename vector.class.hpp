@@ -1,18 +1,9 @@
 #ifndef VECTOR_CLASS_HPP
 #define VECTOR_CLASS_HPP
 
+#include "ft_utils.hpp"
 #include <iostream>
 #include "iterators/vector_iterator.hpp"
-
-namespace ft {
-	template <typename U>
-	void swap(U& a, U&b)
-	{
-		U tmp = a;
-		a = b;
-		b = tmp;
-	}
-}
 
 namespace ft {
 	// CLASS VECTOR
