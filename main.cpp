@@ -24,12 +24,6 @@ void clearConsole() {
 
 //map - по ключу искать значение (Красно - черное дерево)
 
-void testMap() {
-	ft::map<int, int> k;
-	std::cout << k[1];
-	std::cout << k[1];
-}
-
 int main(int argc, char **argv) {
 	if (argc == 1) {
 		return 0;
@@ -45,7 +39,6 @@ int main(int argc, char **argv) {
 			clearConsole();
 		}
 	}
-	testMap();
 //		while (1);
     return 0;
 }
