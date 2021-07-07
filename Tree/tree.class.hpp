@@ -98,6 +98,18 @@ public:
 		_root->right = nullptr;
 		_size = 0;
 	}
+	size_t erase (const key_type& k) {
+		tree *tmp(this);
+		value_type v(k, 0);
+		Node *newNode = searchNode(v);
+		if (!newNode) {
+			return 0;
+		} else {
+			this->clear();
+			//Добавить все элементы, кроме newNode
+		}
+		return 1;
+	}
 private:
 	Node *createNode(const value_type&value, Node *root) {
 		Node *newNode;
