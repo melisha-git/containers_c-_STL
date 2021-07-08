@@ -110,6 +110,16 @@ public:
 		}
 		return 1;
 	}
+	void swap (tree& x) {
+		tree tmp(*this);
+		*this = x;
+		x = tmp;
+	}
+	size_t count (const key_type &k) const {
+		value_type q(k, 0);
+		Node *tmp = searchNode(_root, q);
+		return tmp == nullptr ? 0 : 1;
+	}
 private:
 	Node *createNode(const value_type&value, Node *root) {
 		Node *newNode;
@@ -119,6 +129,25 @@ private:
 		newNode->left = nullptr;
 		newNode->right = nullptr;
 		return newNode;
+	}
+	Node *searchNode(Node *root, const value_type&value) const {
+		if (!root)
+			return nullptr;
+		if (root->value.first == value.first)
+			return root;
+		if (value > root->value) {
+			if (root->right != nullptr) {
+				root = root->right;
+				return searchNode(root, value);
+			}
+		}
+		else if (value.first < root->value.first) {
+			if (root->left != nullptr) {
+				root = root->left;
+				return searchNode(root, value);
+			}
+		}
+		return nullptr;
 	}
 	Node *searchNode(const value_type&value) {
 		if (_size == 0)
