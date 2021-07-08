@@ -99,14 +99,14 @@ public:
 		_size = 0;
 	}
 	size_t erase (const key_type& k) {
-		tree *tmp(this);
+		tree tmp(*this);
 		value_type v(k, 0);
 		Node *newNode = searchNode(v);
 		if (!newNode) {
 			return 0;
 		} else {
 			this->clear();
-			//Добавить все элементы, кроме newNode
+			this->addNo(tmp, k);
 		}
 		return 1;
 	}
@@ -167,6 +167,23 @@ private:
 			if (root->right != nullptr)
 				preOrder(root->right);
 		}
+	}
+	void addNo(tree tmp, const key_type& k) {
+		value_type q(tmp._root->value.first, tmp._root->value.second);
+		if (q.first != k)
+			addNode(q);
+		if (tmp._root != nullptr) {
+			if (tmp._root->left != nullptr) {
+				tmp._root = tmp._root->left;
+				addNo(tmp, k);
+			}
+			tmp.returnPointerRoot();
+			if (tmp._root->right != nullptr) {
+				tmp._root = tmp._root->right;
+				addNo(tmp, k);
+			}
+		}
+		tmp.returnPointerRoot();
 	}
 	void deleteNode(Node **root) {
 		if (*root)
