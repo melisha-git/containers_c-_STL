@@ -9,13 +9,6 @@ namespace ft {
 		a = b;
 		b = tmp;
 	}
-	template <typename U>
-	class less {
-	public:
-		bool operator()(const U& a, const U& b) {
-			return (b > a);
-		}
-	};
 }
 
 
