@@ -1,6 +1,7 @@
 #ifndef MAP_CLASS_HPP
 #define MAP_CLASS_HPP
-#include <iostream>
+#include <iostream> // FOR STD::ALLOCATOR
+#include "../../iterators/map_iterator.hpp"
 #include "../../utils_containers/less.hpp"
 #include "../../utils_containers/pair.hpp"
 #include "../../utils_containers/make_pair.hpp"
@@ -31,6 +32,7 @@ namespace ft {
 		std::allocator<Node> _node_allocator;
 		Node *_root;
 	public:
+		typedef ft::map_iterator<key_type, mapped_type, key_compare, Node> iterator;
 		// PRINT - FUNCTIONS FOR TESTS
 		void print() { printBT("" ,_root, false); }
 
@@ -46,7 +48,9 @@ namespace ft {
 			this->operator=(x);
 		}
 		// DESTRUCTOR
-		~map() { deleteNode(&_root); }
+		~map() {
+			deleteNode(&_root);
+		}
 
 		// OPERATOR =
 		map& operator=(const map& x) {
@@ -57,6 +61,14 @@ namespace ft {
 			this->_node_allocator = x._node_allocator;
 			return *this;
 		}
+
+		/*---------Iterators:---------*/
+		//BEGIN
+		iterator begin() { return iterator(_root).getNode(); }
+//		const_iterator begin() const;
+		//END
+		iterator end() { return iterator(_root).getLastNode(); }
+//		const_iterator end() const;
 
 		/*---------CAPACITY---------*/
 		// EMPTY

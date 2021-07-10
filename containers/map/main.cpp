@@ -3,29 +3,28 @@
 #include <map>
 
 int main() {
-	std::map<char, int> k;
-	ft::map<char, int> p;
+	std::map<char, int>::iterator k;
+	ft::map<int, int> p;
+//	typedef std::iterator_traits<int*> traits;
 
-	p['A'] = 1;
-	p['B'] = 2;
-	p['C'] = 3;
-	p['D'] = 4;
-	ft::map<char, int> q(p);
+	p[8] = 8;
+	p[3] = 3;
+	p[10] = 10;
+	p[14] = 14;
+	p[13] = 13;
+	p[1] = 1;
+	p[6] = 6;
+	p[4] = 4;
+	p[7] = 7;
 	p.print();
 	std::cout << std::endl << std::endl;
-	q['a'] = 5;
-	q['b'] = 6;
-	q['c'] = 7;
-	q['d'] = 8;
-	q.print();
-
-	std::cout << std::endl << std::endl;
-	p.swap(q);
-	p.print();
-	std::cout << std::endl << std::endl;
-	q.erase('B');
-	q.print();
-	std::cout << std::endl << std::endl;
+	ft::map<int, int>::iterator t = p.begin();
+	ft::map<int, int>::iterator i = p.end();
+	while (++t != i) {
+		std::cout << t->first << t->second << std::endl;
+	}
+//	std::cout << t->first << t->second << std::endl;
+//	std::cout << i->first << i->second << std::endl;
 //	while (1);
 	return 0;
 }
