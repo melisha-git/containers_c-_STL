@@ -41,7 +41,9 @@ namespace ft {
 			: _size(0), _type_allocator(alloc) {
 			_root = createNode(value_type(), nullptr);
 		}
-
+		//Range
+		template <class InputIterator>
+//		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) {}
 		// COPY CONSTRUCTOR
 		map (const map& x) : _size(0) {
 			_root = createNode(value_type(), nullptr);
@@ -88,6 +90,16 @@ namespace ft {
 			return this->searchNode(_root, pair)->value.second;
 		}
 		/*---------MODIFIERS---------*/
+		//INSERT
+		ft::pair<iterator, bool> insert (const value_type& val) {
+			if (this->count(val.second)) {
+				ft::pair<iterator, bool> m((iterator(searchNode(_root, val)).getNode()), false);
+				return m;
+			}
+			this->operator[](val.first) = val.second;
+			ft::pair<iterator, bool> m((iterator(searchNode(_root, val)).getNode()), true);
+			return m;
+		}
 		// ERASE
 		size_type erase (const key_type& k) {
 			map tmp(*this);

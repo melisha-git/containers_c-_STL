@@ -15,16 +15,15 @@ int main() {
 	p[1] = 1;
 	p[6] = 6;
 	p[4] = 4;
-	p[7] = 7;
+	ft::pair<int, int> q(7, 7);
+	p.insert(q);
+//	p[7] = 7;
 	p.print();
 	std::cout << std::endl << std::endl;
 	ft::map<int, int>::iterator t = p.begin();
 	ft::map<int, int>::iterator i = p.end();
-	while (++t != i) {
-		std::cout << t->first << t->second << std::endl;
-	}
-//	std::cout << t->first << t->second << std::endl;
-//	std::cout << i->first << i->second << std::endl;
+	std::cout << t->first << t->second << std::endl;
+	std::cout << i->first << i->second << std::endl;
 //	while (1);
 	return 0;
 }

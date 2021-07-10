@@ -47,21 +47,20 @@ namespace ft {
 		reference operator*() const { return (_node->value); }
 		pointer operator->() const { return &_node->value; }
 		map_iterator& operator++() {
-			if (_node->right) {
+			if (_node == searchMaxNode(_node));
+			else if (_node->right) {
 				_node = _node->right;
 				while (_node->left)
 					_node = _node->left;
-				return (*this);
-			}
-			if (_node->parrent) {
+			} else if (_node->parrent) {
 				value_type save = _node->value;
 				while (_node->parrent && save.first > _node->parrent->value.first)
 					_node = _node->parrent;
 				if (!_node->parrent)
-					operator++();
+					return operator++();
 				_node = _node->parrent;
-				return (*this);
 			}
+			return (*this);
 		}
 		map_iterator operator++(int) {
 			map_iterator res(*this);
@@ -69,21 +68,20 @@ namespace ft {
 			return res;
 		}
 		map_iterator& operator--() {
-			if (_node->left) {
+			if (_node == searchMinNode(_node));
+			else if (_node->left) {
 				_node = _node->left;
 				while (_node->right)
 					_node = _node->right;
-				return (*this);
-			}
-			if (_node->parrent) {
+			} else if (_node->parrent) {
 				value_type save = _node->value;
 				while (_node->parrent && save.first < _node->parrent->value.first)
 					_node = _node->parrent;
 				if (!_node->parrent)
-					operator++();
+					return operator++();
 				_node = _node->parrent;
-				return (*this);
 			}
+			return (*this);
 		}
 		map_iterator operator--(int) {
 			map_iterator res(*this);
@@ -93,7 +91,6 @@ namespace ft {
 
 		bool operator==(const map_iterator& it) const   { return (it._node == _node); }
 		bool operator!=(const map_iterator& it) const   { return (it._node != _node); }
-
 
 		Node * getNode() const { return _node; }
 		Node * getLastNode() const         { return _lastNode; }
@@ -110,6 +107,22 @@ namespace ft {
 				for (; root->right; root = root->right);
 			}
 			_lastNode = root;
+		}
+		Node* searchMaxNode(Node *root)
+		{
+			while (root->parrent)
+				root = root->parrent;
+			while (root->right)
+				root = root->right;
+			return root;
+		}
+		Node* searchMinNode(Node *root)
+		{
+			while (root->parrent)
+				root = root->parrent;
+			while (root->left)
+				root = root->left;
+			return root;
 		}
 	};
 }
