@@ -5,6 +5,7 @@
 #include "../../utils_containers/less.hpp"
 #include "../../utils_containers/pair.hpp"
 #include "../../utils_containers/make_pair.hpp"
+#include "../../utils_containers/enable_if.hpp"
 
 namespace ft {
 	template<class _Key, class T, class Compare = ft::less<_Key>, class _Allocator = std::allocator <ft::pair<const _Key, T> > >
@@ -33,6 +34,7 @@ namespace ft {
 		Node *_root;
 	public:
 		typedef ft::map_iterator<key_type, mapped_type, key_compare, Node> iterator;
+		typedef typename ft::iterator_traits<iterator>::difference_type difference_type;
 		// PRINT - FUNCTIONS FOR TESTS
 		void print() { printBT("" ,_root, false); }
 
@@ -42,7 +44,6 @@ namespace ft {
 			_root = createNode(value_type(), nullptr);
 		}
 		//Range
-		template <class InputIterator>
 //		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) {}
 		// COPY CONSTRUCTOR
 		map (const map& x) : _size(0) {
@@ -100,7 +101,22 @@ namespace ft {
 			ft::pair<iterator, bool> m((iterator(searchNode(_root, val)).getNode()), true);
 			return m;
 		}
+		iterator insert(iterator position, const value_type& val) {
+			(void)position;
+			return this->insert(val);
+		}
+		template <class InputIterator>
+		void insert (InputIterator first, InputIterator last,
+					 typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = nullptr) {
+			difference_type n = ft::distance(first, last);
+			while (n--)
+				this->insert(*(first++));
+		}
 		// ERASE
+		void erase(iterator position) {
+			const key_type k = position->first;
+			this->erase(k);
+		}
 		size_type erase (const key_type& k) {
 			map tmp(*this);
 			if (this->count(k) == 0)
@@ -108,6 +124,14 @@ namespace ft {
 			this->clear();
 			this->addTmpBesidesK(tmp, k);
 			return 1;
+		}
+		void erase (iterator first, iterator last) {
+			map tmp(*this);
+			difference_type n = ft::distance(first, last);
+			while (first != last)
+				tmp.erase(first++);
+			tmp.erase(first);
+			this->swap(tmp);
 		}
 		// SWAP
 		void swap(map &x) {

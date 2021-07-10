@@ -37,7 +37,7 @@ namespace ft {
 		~map_iterator() {}
 
 		map_iterator &operator=(const map_iterator& other) {
-			if (this != other) {
+			if (*this != other) {
 				_node = other.getNode();
 				_lastNode = other.getLastNode();
 				_comp = other.getCompare();
@@ -110,10 +110,14 @@ namespace ft {
 		}
 		Node* searchMaxNode(Node *root)
 		{
-			while (root->parrent)
-				root = root->parrent;
-			while (root->right)
-				root = root->right;
+			if (root) {
+				if (root->parrent) {
+					while (root->parrent)
+						root = root->parrent;
+				}
+				while (root->right)
+					root = root->right;
+			}
 			return root;
 		}
 		Node* searchMinNode(Node *root)
