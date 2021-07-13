@@ -1,18 +1,18 @@
-SRCVEC = main.cpp containers/vector/vector.class.hpp iterators/vector_iterator.hpp containers/vector/test_vector.cpp
-
-SRCMAP = containers/map/main.cpp containers/map/map.class.hpp
+SRC = main.cpp containers/vector/test_vector.cpp containers/map/test_map.cpp
 
 SRCUTILS = utils_containers/main.cpp
 
 FLAGS = -Wall -Werror -Wextra
 
-DELETE = a.out vector.class.hpp.gch map.class.hpp.gch ft_utils.hpp.gch iterators/vector_iterator.hpp.gch containers/map/map.class.hpp.gch
+DELETE = a.out vector.class.hpp.gch map.class.hpp.gch ft_utils.hpp.gch iterators/vector_iterator.hpp.gch containers/map/map.class.hpp.gch containers/vector/vector.class.hpp.gch
 
+all: 
+	clang++ $(SRC) && ./a.out && rm -rf $(DELETE)
 vector :
-	clang++ $(SRCVEC) && ./a.out 'vector' && rm -rf $(DELETE)
+	clang++ $(SRC) && ./a.out 'vector' && rm -rf $(DELETE)
 
 map :
-	clang++ $(SRCMAP) && ./a.out && rm -rf $(DELETE)
+	clang++ $(SRC) && ./a.out 'map' && rm -rf $(DELETE)
 
 utils :
 	clang++ $(SRCUTILS) && ./a.out && rm -rf $(DELETE)
