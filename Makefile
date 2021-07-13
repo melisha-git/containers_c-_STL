@@ -1,4 +1,4 @@
-SRCVEC = main.cpp vector.class.hpp iterators/vector_iterator.hpp test_vector.cpp ft_utils.hpp
+SRCVEC = main.cpp containers/vector/vector.class.hpp iterators/vector_iterator.hpp containers/vector/test_vector.cpp
 
 SRCMAP = containers/map/main.cpp containers/map/map.class.hpp
 

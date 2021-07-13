@@ -99,7 +99,7 @@ namespace ft {
 	protected:
 		void setFirst(Node *root) {
 			if (root) {
-				for (; root->right; root = root->left);
+				for (; root->left; root = root->left);
 			}
 			_node = root;
 		}

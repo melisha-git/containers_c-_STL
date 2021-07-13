@@ -1,5 +1,4 @@
 #include <string>
-#include "map.class.hpp"
 #include <iostream>
 #include <map>
 #include <vector>
@@ -21,8 +20,6 @@ void testBoolVector();
 void clearConsole() {
 	std::cout << "\x1b[0m";
 }
-
-//map - по ключу искать значение (Красно - черное дерево)
 
 int main(int argc, char **argv) {
 	if (argc == 1) {

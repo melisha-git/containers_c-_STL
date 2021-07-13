@@ -181,8 +181,20 @@ namespace ft {
 		iterator find (const key_type& k) {
 			Node *tmp = searchNode(_root, value_type(k, 0));
 			if (tmp == nullptr)
-				return this->end();
-			return iterator(tmp).getNode();
+				return ++(this->end());
+			iterator it(tmp);
+			if (it->first != k)
+				++it;
+			return it;
+		}
+		const_iterator find(const key_type& k) const {
+			Node *tmp = searchNode(_root, value_type(k, 0));
+			if (tmp == nullptr)
+				return ++(this->end());
+			const_iterator it(tmp);
+			if (it->first != k)
+				++it;
+			return it;
 		}
 		//COUNT
 		size_type count (const key_type& k) const {
@@ -199,9 +211,25 @@ namespace ft {
 			}
 			return it;
 		}
+		const_iterator lower_bound (const key_type& k) const {
+			const_iterator it = begin();
+			for (; it != end(); ++it) {
+				if (!(_comp(it->first, k)))
+					break ;
+			}
+			return it;
+		}
 		// UPPER_BOUND
 		iterator upper_bound (const key_type& k) {
 			iterator it = begin();
+			for (; it != end(); ++it) {
+				if (_comp(k, it->first))
+					break ;
+			}
+			return it;
+		}
+		const_iterator upper_bound (const key_type& k) const {
+			const_iterator it = begin();
 			for (; it != end(); ++it) {
 				if (_comp(k, it->first))
 					break ;
@@ -218,6 +246,19 @@ namespace ft {
 					++it;
 			}
 			iterator next(it);
+			if (it != end())
+				++next;
+			return ft::make_pair<iterator, iterator>(it, next);
+		}
+		pair<const_iterator,const_iterator> equal_range (const key_type& k) const {
+			const_iterator it = upper_bound(k);
+
+			if (it != begin()) {
+				--it;
+				if (_comp(it->first, k) || _comp(k, it->first))
+					++it;
+			}
+			const_iterator next(it);
 			if (it != end())
 				++next;
 			return ft::make_pair<iterator, iterator>(it, next);
