@@ -21,6 +21,15 @@ namespace ft {
 		typedef value_type *pointer;
 		typedef const value_type *const_pointer;
 		typedef size_t size_type;
+		class value_compare {
+		protected:
+			key_compare _comp;
+			value_compare(Compare comp) : _comp(comp) {}
+		public :
+			bool operator()(const value_type& x, const value_type &y) const {
+				return _comp(x.first, y.first);
+			}
+		};
 	private:
 		struct Node {
 			value_type value;
@@ -28,6 +37,7 @@ namespace ft {
 			Node *left;
 			Node *right;
 		};
+		key_compare	_comp;
 		size_type _size;
 		allocator_type _type_allocator;
 		std::allocator<Node> _node_allocator;
@@ -39,12 +49,18 @@ namespace ft {
 		void print() { printBT("" ,_root, false); }
 
 		// DEFAULT_CONSTRUCTOR
-		explicit map(const allocator_type &alloc = allocator_type())
-			: _size(0), _type_allocator(alloc) {
+		explicit map(const key_compare&comp = key_compare(), const allocator_type &alloc = allocator_type())
+			: _comp(comp), _size(0), _type_allocator(alloc) {
 			_root = createNode(value_type(), nullptr);
 		}
 		//Range
-//		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) {}
+		template <class InputIterator>
+		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type(),
+			 typename ft::enable_if<!ft::is_integral<InputIterator>::value, mapped_type>::type* = 0) :
+			 _comp(comp) ,_size(0), _type_allocator(alloc) {
+			_root = createNode(value_type(), nullptr);
+			insert(first, last);
+		}
 		// COPY CONSTRUCTOR
 		map (const map& x) : _size(0) {
 			_root = createNode(value_type(), nullptr);
@@ -59,6 +75,7 @@ namespace ft {
 		map& operator=(const map& x) {
 			this->clear();
 			copyNode(x._root);
+			this->_comp = x._comp;
 			this->_size = x._size;
 			this->_type_allocator = x._type_allocator;
 			this->_node_allocator = x._node_allocator;
@@ -111,6 +128,7 @@ namespace ft {
 			difference_type n = ft::distance(first, last);
 			while (n--)
 				this->insert(*(first++));
+			this->insert(*(first));
 		}
 		// ERASE
 		void erase(iterator position) {
@@ -144,14 +162,59 @@ namespace ft {
 			deleteNode(&_root);
 			_root = createNode(value_type(), nullptr);
 		}
+		/*---------Observers:---------*/
+		// KEY_COMP
+		key_compare key_comp() const { return _comp; }
+		// VALUE_COMP
+		value_compare value_comp() const { return value_compare(_comp); }
 
 		/*---------Operations:---------*/
+		// FIND
+		iterator find (const key_type& k) {
+			Node *tmp = searchNode(_root, value_type(k, 0));
+			if (tmp == nullptr)
+				return this->end();
+			return iterator(tmp).getNode();
+		}
 		//COUNT
 		size_type count (const key_type& k) const {
 			value_type pair(k, 0);
 			Node *tmp = searchNode(_root, pair);
 			return tmp == nullptr ? 0 : 1;
 		}
+		// LOWER_BOUND
+		iterator lower_bound (const key_type& k) {
+			iterator it = begin();
+			for (; it != end(); ++it) {
+				if (!(_comp(it->first, k)))
+					break ;
+			}
+			return it;
+		}
+		// UPPER_BOUND
+		iterator upper_bound (const key_type& k) {
+			iterator it = begin();
+			for (; it != end(); ++it) {
+				if (_comp(k, it->first))
+					break ;
+			}
+			return it;
+		}
+		// EQUAL_RANGE
+		ft::pair<iterator,iterator> equal_range(const key_type& k) {
+			iterator it = upper_bound(k);
+
+			if (it != begin()) {
+				--it;
+				if (_comp(it->first, k) || _comp(k, it->first))
+					++it;
+			}
+			iterator next(it);
+			if (it != end())
+				++next;
+			return ft::make_pair<iterator, iterator>(it, next);
+		}
+
 		/*---------Allocator:---------*/
 		// get_allocator()
 		allocator_type get_allocator() const { return _type_allocator; }
