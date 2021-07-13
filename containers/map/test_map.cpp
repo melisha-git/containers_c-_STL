@@ -69,6 +69,16 @@ void testMapFindErase() {
 	std::cout << g1.size() << std::endl;
 	std::cout << std::endl;
 	/*
-	* FIND
+	* FIND AND ERASE
 	*/
+	std::cout << "\x1b[32mMY VECTOR TEST\n";
+	std::map<int, int>::iterator it;
+	it = v1.find(3);
+	ft::map<int, int>::iterator ite;
+	ite = g1.find(3);
+	v1.erase(it, v1.end());
+	g1.erase(ite, g1.end());
+	std::cout << g1.size() << std::endl;
+	std::cout << "\x1b[31mDEFAULT VECTOR TEST\n";
+	std::cout << v1.size() << std::endl;
 }

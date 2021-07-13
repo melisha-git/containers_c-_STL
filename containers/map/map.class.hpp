@@ -156,7 +156,8 @@ namespace ft {
 			difference_type n = ft::distance(first, last);
 			while (first != last)
 				tmp.erase(first++);
-			tmp.erase(first);
+			if (last == this->end())
+				tmp.erase(first);
 			this->swap(tmp);
 		}
 		// SWAP
@@ -183,7 +184,7 @@ namespace ft {
 			if (tmp == nullptr)
 				return ++(this->end());
 			iterator it(tmp);
-			if (it->first != k)
+			while (it->first != k)
 				++it;
 			return it;
 		}
