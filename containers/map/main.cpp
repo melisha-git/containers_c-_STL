@@ -23,8 +23,9 @@ int main() {
 	k[1] = 1;
 	k[6] = 6;
 	k[4] = 4;
-	ft::map<int, int>::const_iterator u(p.begin());
-	ft::map<int, int>::const_iterator q(u);
+	ft::map<int, int>::const_reverse_iterator u;
+	u = p.rbegin();
+	u++;
 	std::cout << u->first;
 //	std::cout << k.equal_range(1).first->first << k.equal_range(1).second->first << std::endl;
 //	std::cout << p.equal_range(1).first->first << p.equal_range(1).second->first << std::endl;

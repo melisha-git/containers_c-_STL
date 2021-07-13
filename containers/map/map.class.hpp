@@ -45,6 +45,8 @@ namespace ft {
 	public:
 		typedef ft::const_map_iterator<key_type, mapped_type, key_compare, Node> const_iterator;
 		typedef ft::map_iterator<key_type, mapped_type, key_compare, Node> iterator;
+		typedef ft::map_reverse_iterator<key_type, mapped_type, key_compare, Node> reverse_iterator;
+		typedef ft::const_reverse_map_iterator<key_type, mapped_type, key_compare, Node> const_reverse_iterator;
 		typedef typename ft::iterator_traits<iterator>::difference_type difference_type;
 		// PRINT - FUNCTIONS FOR TESTS
 		void print() { printBT("" ,_root, false); }
@@ -90,7 +92,12 @@ namespace ft {
 		//END
 		iterator end() { return iterator(_root).getLastNode(); }
 		const_iterator end() const { return const_iterator(_root).getLastNode(); }
-
+		// RBEGIN
+		reverse_iterator rbegin() { return reverse_iterator(_root).getLastNode(); }
+		const_reverse_iterator rbegin() const { return const_reverse_iterator(_root).getLastNode(); }
+		// REND
+		reverse_iterator rend() { return reverse_iterator(_root).getNode(); }
+		const_reverse_iterator rend() const { return const_reverse_iterator(_root).getNode(); }
 		/*---------CAPACITY---------*/
 		// EMPTY
 		bool empty() const { return _size == 0; }
