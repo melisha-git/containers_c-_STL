@@ -43,6 +43,7 @@ namespace ft {
 		std::allocator<Node> _node_allocator;
 		Node *_root;
 	public:
+		typedef ft::const_map_iterator<key_type, mapped_type, key_compare, Node> const_iterator;
 		typedef ft::map_iterator<key_type, mapped_type, key_compare, Node> iterator;
 		typedef typename ft::iterator_traits<iterator>::difference_type difference_type;
 		// PRINT - FUNCTIONS FOR TESTS
@@ -84,11 +85,11 @@ namespace ft {
 
 		/*---------Iterators:---------*/
 		//BEGIN
+		const_iterator begin() const {return const_iterator(_root).getNode(); }
 		iterator begin() { return iterator(_root).getNode(); }
-//		const_iterator begin() const;
 		//END
 		iterator end() { return iterator(_root).getLastNode(); }
-//		const_iterator end() const;
+		const_iterator end() const { return const_iterator(_root).getLastNode(); }
 
 		/*---------CAPACITY---------*/
 		// EMPTY

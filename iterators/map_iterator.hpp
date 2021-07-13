@@ -19,7 +19,7 @@ namespace ft {
 		typedef std::bidirectional_iterator_tag	iterator_category;
 		typedef value_type&  reference;
 		typedef value_type*  pointer;
-	private:
+	protected:
 		key_compare _comp;
 		Node *_node;
 		Node *_lastNode;
@@ -34,7 +34,7 @@ namespace ft {
 			_lastNode = copy.getLastNode();
 			_comp = copy.getCompare();
 		}
-		~map_iterator() {}
+		virtual ~map_iterator() {}
 
 		map_iterator &operator=(const map_iterator& other) {
 			if (*this != other) {
@@ -128,6 +128,36 @@ namespace ft {
 				root = root->left;
 			return root;
 		}
+	};
+
+	template <class Key, class T, class Compare, typename Node>
+	class const_map_iterator : public map_iterator<Key, T, Compare, Node> {
+	public:
+		typedef Key	key_type;
+		typedef Compare key_compare;
+		typedef T	mapped_type;
+
+		typedef ft::pair<const key_type, mapped_type> value_type;
+		typedef long difference_type;
+		typedef size_t size_type;
+
+		typedef std::bidirectional_iterator_tag	iterator_category;
+		typedef value_type&  reference;
+		typedef value_type*  pointer;
+	public:
+		const_map_iterator(Node *node = 0, const key_compare &comp = key_compare()) : map_iterator<Key, T, Compare, Node>(node, comp) {}
+		const_map_iterator(const map_iterator<Key, T, Compare, Node> &other) : map_iterator<Key, T, Compare, Node>(other) {}
+		virtual ~const_map_iterator() {}
+		const_map_iterator &operator=(const const_map_iterator<Key, T, Compare, Node> &other) {
+			if (*this != other) {
+				this->_node = other.getNode();
+				this->_lastNode = other.getLastNode();
+				this->_comp = other.getCompare();
+			}
+			return *this;
+		}
+		const value_type& operator*() const { return (this->_node->value); }
+		const value_type* operator->() const { return &this->_node->value; }
 	};
 }
 
