@@ -4,6 +4,7 @@
 #include "../../iterators/map_iterator.hpp"
 #include "../../utils_containers/less.hpp"
 #include "../../utils_containers/pair.hpp"
+#include "../../utils_containers/swap.hpp"
 #include "../../utils_containers/make_pair.hpp"
 #include "../../utils_containers/enable_if.hpp"
 
@@ -42,6 +43,7 @@ namespace ft {
 		allocator_type _type_allocator;
 		std::allocator<Node> _node_allocator;
 		Node *_root;
+		Node *_last;
 	public:
 		typedef ft::const_map_iterator<key_type, mapped_type, key_compare, Node> const_iterator;
 		typedef ft::map_iterator<key_type, mapped_type, key_compare, Node> iterator;
@@ -93,11 +95,11 @@ namespace ft {
 		iterator end() { return iterator(_root).getLastNode(); }
 		const_iterator end() const { return const_iterator(_root).getLastNode(); }
 		// RBEGIN
-		reverse_iterator rbegin() { return reverse_iterator(_root).getLastNode(); }
-		const_reverse_iterator rbegin() const { return const_reverse_iterator(_root).getLastNode(); }
+		reverse_iterator rbegin() { return reverse_iterator(_root).getNode(); }
+		const_reverse_iterator rbegin() const { return const_reverse_iterator(_root).getNode(); }
 		// REND
-		reverse_iterator rend() { return reverse_iterator(_root).getNode(); }
-		const_reverse_iterator rend() const { return const_reverse_iterator(_root).getNode(); }
+		reverse_iterator rend() { return reverse_iterator(_root).getLastNode(); }
+		const_reverse_iterator rend() const { return const_reverse_iterator(_root).getLastNode(); }
 		/*---------CAPACITY---------*/
 		// EMPTY
 		bool empty() const { return _size == 0; }
@@ -140,6 +142,8 @@ namespace ft {
 		}
 		// ERASE
 		void erase(iterator position) {
+			if (position == (--this->end()))
+				return erase(position, this->end());
 			const key_type k = position->first;
 			this->erase(k);
 		}
@@ -156,8 +160,6 @@ namespace ft {
 			difference_type n = ft::distance(first, last);
 			while (first != last)
 				tmp.erase(first++);
-			if (last == this->end())
-				tmp.erase(first);
 			this->swap(tmp);
 		}
 		// SWAP
@@ -181,8 +183,10 @@ namespace ft {
 		// FIND
 		iterator find (const key_type& k) {
 			Node *tmp = searchNode(_root, value_type(k, 0));
-			if (tmp == nullptr)
-				return ++(this->end());
+			if (tmp == nullptr) {
+				this->operator[](k);
+				tmp = searchNode(_root, value_type(k, 0));
+			}
 			iterator it(tmp);
 			while (it->first != k)
 				++it;
@@ -330,6 +334,8 @@ namespace ft {
 			if (_size == 0) {
 				deleteNode(&_root);
 				_root = createNode(value, nullptr);
+				_root->right = createNode(value_type(), _root);
+				_last = _root->right;
 				_size++;
 				return;
 			}
@@ -346,14 +352,29 @@ namespace ft {
 					return addNode(value);
 				} else {
 					_root->right = createNode(value, _root);
+					if (_root->value == value_type()) {
+						Node *tmp = _root;
+						_root->right->parrent = _root->parrent;
+						_root->parrent->right = _root->right;
+						_root->parrent->right->right = createNode(value_type(), _root->parrent->right);
+						_type_allocator.destroy(&(tmp)->value);
+						_node_allocator.deallocate(tmp, 1);
+					}
 				}
 			}
 			returnPointerRoot();
+			searchLast(_root);
 			_size++;
+		}
+		void searchLast(Node *root) {
+			if (root) {
+				for (; root->right; root = root->right);
+			}
+			_last = root;
 		}
 		void addTmpBesidesK(map tmp, const key_type &k) {
 			value_type q(tmp._root->value.first, tmp._root->value.second);
-			if (q.first != k)
+			if (q.first != k && q != value_type())
 				addNode(q);
 			if (tmp._root != nullptr) {
 				if (tmp._root->left != nullptr) {
@@ -361,7 +382,7 @@ namespace ft {
 					addTmpBesidesK(tmp, k);
 				}
 				tmp.returnPointerRoot();
-				if (tmp._root->right != nullptr) {
+				if (tmp._root->right != nullptr && tmp._root->right->value != value_type()) {
 					tmp._root = tmp._root->right;
 					addTmpBesidesK(tmp, k);
 				}

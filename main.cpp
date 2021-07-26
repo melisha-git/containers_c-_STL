@@ -18,6 +18,7 @@ void testReverseIterators();
 void testBoolVector();
 void testMap();
 void testMapFindErase();
+void testMapAlgorithm();
 
 void clearConsole() {
 	std::cout << "\x1b[0m";
@@ -44,12 +45,13 @@ int main(int argc, char **argv) {
 		}
 	}
 	if (test == "map") {
-		void (*arrayFnc[])() = {testMap, testMapFindErase};
+		void (*arrayFnc[])() = {testMap, testMapFindErase, testMapAlgorithm};
 		size_t size = sizeof(arrayFnc) / sizeof(arrayFnc[0]);
 		for (size_t i = 0; i < size; i++) {
 			arrayFnc[i]();
 			clearConsole();
 		}
+//		while (1);
 	}
     return 0;
 }
