@@ -1,4 +1,4 @@
-SRC = main.cpp containers/vector/test_vector.cpp containers/map/test_map.cpp
+SRC = main.cpp containers/vector/test_vector.cpp containers/map/test_map.cpp containers/stack/test_stack.cpp
 
 SRCUTILS = utils_containers/main.cpp
 
@@ -13,6 +13,9 @@ vector :
 
 map :
 	clang++ $(SRC) && ./a.out 'map' && rm -rf $(DELETE)
+
+stack :
+	clang++ $(SRC) && ./a.out 'stack' && rm -rf $(DELETE)
 
 utils :
 	clang++ $(SRCUTILS) && ./a.out && rm -rf $(DELETE)

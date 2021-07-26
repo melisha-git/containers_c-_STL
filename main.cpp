@@ -1,7 +1,8 @@
 #include <string>
 #include <iostream>
-#include <map>
-#include <vector>
+//#include <map>
+//#include <vector>
+//#include <s
 
 void testSwap();
 void testModifies();
@@ -19,6 +20,7 @@ void testBoolVector();
 void testMap();
 void testMapFindErase();
 void testMapAlgorithm();
+void testStack();
 
 void clearConsole() {
 	std::cout << "\x1b[0m";
@@ -51,7 +53,14 @@ int main(int argc, char **argv) {
 			arrayFnc[i]();
 			clearConsole();
 		}
-//		while (1);
+	}
+	if (test == "stack") {
+		void (*arrayFnc[])() = {testStack};
+		size_t size = sizeof(arrayFnc) / sizeof(arrayFnc[0]);
+		for (size_t i = 0; i < size; i++) {
+			arrayFnc[i]();
+			clearConsole();
+		}
 	}
     return 0;
 }
