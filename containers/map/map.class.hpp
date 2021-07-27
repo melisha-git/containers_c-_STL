@@ -50,8 +50,6 @@ namespace ft {
 		typedef ft::map_reverse_iterator<key_type, mapped_type, key_compare, Node> reverse_iterator;
 		typedef ft::const_reverse_map_iterator<key_type, mapped_type, key_compare, Node> const_reverse_iterator;
 		typedef typename ft::iterator_traits<iterator>::difference_type difference_type;
-		// PRINT - FUNCTIONS FOR TESTS
-		void print() { printBT("" ,_root, false); }
 
 		// DEFAULT_CONSTRUCTOR
 		explicit map(const key_compare&comp = key_compare(), const allocator_type &alloc = allocator_type())
@@ -157,7 +155,6 @@ namespace ft {
 		}
 		void erase (iterator first, iterator last) {
 			map tmp(*this);
-			difference_type n = ft::distance(first, last);
 			while (first != last)
 				tmp.erase(first++);
 			this->swap(tmp);
@@ -255,7 +252,7 @@ namespace ft {
 				++next;
 			return ft::make_pair<iterator, iterator>(it, next);
 		}
-		pair<const_iterator,const_iterator> equal_range (const key_type& k) const {
+		pair<const_iterator,const_iterator> equal_range(const key_type& k) const {
 			const_iterator it = upper_bound(k);
 
 			if (it != begin()) {
@@ -309,15 +306,6 @@ namespace ft {
 				}
 			}
 			return nullptr; // Не нашли
-		}
-		void printBT(const std::string &prefix, const Node *node, bool isLeft) {
-			if (node != nullptr) {
-				std::cout << prefix;
-				std::cout << (isLeft ? "├──" : "└──");
-				std::cout << node->value.first << node->value.second << std::endl;
-				printBT(prefix + (isLeft ? "│   " : "    "), node->left, true);
-				printBT(prefix + (isLeft ? "│   " : "    "), node->right, false);
-			}
 		}
 		void deleteNode(Node **root) {
 			if (*root) {

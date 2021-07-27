@@ -8,7 +8,7 @@
 namespace ft {
 	// CLASS VECTOR
     template<typename T, class Alloc = std::allocator<T> >
-    class Vector {
+    class vector {
 	private:
     	T *_array;
     	size_t _size;
@@ -19,10 +19,10 @@ namespace ft {
     	typedef typename ft::vector_reverse_iterator<T> reverse_iterator;
 		typedef typename ft::vector_iterator<T> iterator;
 		typedef typename ft::const_vector_iterator<T> const_iterator;
-        explicit Vector();
-		Vector(size_t n, const T &x = T(), const Alloc &alloc = Alloc());
-        Vector(const Vector &);
-        ~Vector();
+        explicit vector();
+		vector(size_t n, const T &x = T(), const Alloc &alloc = Alloc());
+        vector(const vector &);
+        ~vector();
 
         size_t size() const;
         size_t capacity();
@@ -35,7 +35,7 @@ namespace ft {
         void reserve(size_t n);
 		void resize (size_t n, T x = T());
 
-		Vector& operator=(const Vector& x);
+		vector& operator=(const vector& x);
         T& operator[](size_t n);
 		const T& operator[] (size_t n) const;
 
@@ -53,7 +53,7 @@ namespace ft {
 		void insert (iterator position, iterator first, iterator last);
 		iterator erase(iterator position);
 		iterator erase (iterator first, iterator last);
-		void swap (Vector& x);
+		void swap (vector& x);
 
 		Alloc get_allocator() const;
 
@@ -67,7 +67,7 @@ namespace ft {
 		const_iterator  end() const   { return const_iterator(_array + _size); }
 
 
-		friend bool operator==(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+		friend bool operator==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
 			if (lhs.size() != rhs.size())
 				return false;
 			iterator itl = lhs.begin();
@@ -78,7 +78,7 @@ namespace ft {
 			}
 			return true;
 		}
-		friend bool operator!=(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+		friend bool operator!=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
 			if (lhs.size() != rhs.size())
 				return true;
 			iterator itl = lhs.begin();
@@ -89,7 +89,7 @@ namespace ft {
 			}
 			return false;
 		}
-		friend bool operator<(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+		friend bool operator<(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
 			if (lhs.size() < rhs.size())
 				return true;
 			iterator itl = lhs.begin();
@@ -104,7 +104,7 @@ namespace ft {
 			}
 			return false;
 		}
-		friend bool operator>(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+		friend bool operator>(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
 			if (lhs.size() > rhs.size())
 				return true;
 			const_iterator itl = lhs.begin();
@@ -119,7 +119,7 @@ namespace ft {
 			}
 			return false;
 		}
-		friend bool operator<=(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+		friend bool operator<=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
 			if (lhs.size() < rhs.size())
 				return true;
 			iterator itl = lhs.begin();
@@ -134,7 +134,7 @@ namespace ft {
 			}
 			return true;
 		}
-		friend bool operator>=(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+		friend bool operator>=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
 			if (lhs.size() > rhs.size())
 				return true;
 			const_iterator itl = lhs.begin();
@@ -149,12 +149,12 @@ namespace ft {
 			}
 			return true;
 		}
-		friend void swap(Vector<T,Alloc>& x, Vector<T,Alloc>& y) {
+		friend void swap(vector<T,Alloc>& x, vector<T,Alloc>& y) {
 			ft::swap(x, y);
 		}
     };
     template<class Alloc>
-    class Vector<bool, Alloc> {
+    class vector<bool, Alloc> {
     private:
     	bool *_array;
     	size_t _size;
@@ -173,10 +173,10 @@ namespace ft {
 		typedef typename ft::vector_reverse_iterator<bool> reverse_iterator;
 		typedef typename ft::vector_iterator<bool> iterator;
 		typedef typename ft::const_vector_iterator<bool> const_iterator;
-		explicit Vector() : _array(nullptr), _size(0), _capacity(0) {
+		explicit vector() : _array(nullptr), _size(0), _capacity(0) {
 			_array = _alloc.allocate(_capacity);
 		}
-		Vector(size_t n, const bool &x = bool(), const Alloc &alloc = Alloc()) : _alloc(alloc) {
+		vector(size_t n, const bool &x = bool(), const Alloc &alloc = Alloc()) : _alloc(alloc) {
 			_size = 0;
 			_capacity = 0;
 			_array = _alloc.allocate(_capacity);
@@ -184,12 +184,12 @@ namespace ft {
 				this->push_back(x);
 			}
 		}
-		Vector(const Vector<bool> &other) : _size(other._size), _capacity(other._capacity) {
+		vector(const vector<bool> &other) : _size(other._size), _capacity(other._capacity) {
 			_array = _alloc.allocate(other._size);
 			for (size_t i = 0; i != other._size; i++)
 				_alloc.construct(&_array[i], other._array[i]);
 		}
-		~Vector() {
+		~vector() {
 			for (size_t i = 0; i < _size; i++) {
 				_alloc.destroy(&_array[i]);
 			}
@@ -234,7 +234,7 @@ namespace ft {
 			for (size_t i = 0; i < _size; i++) {
 				_alloc.construct(&_copy[i], _array[i]);
 			}
-			this->~Vector();
+			this->~vector();
 			_array = _copy;
 		}
 		void resize (size_t n, bool x = bool()) {
@@ -247,7 +247,7 @@ namespace ft {
 			_size = n;
 		}
 
-		Vector& operator=(const Vector& x) {
+		vector& operator=(const vector& x) {
 			this->clear();
 			this->~Vector();
 			_size = x._size;
@@ -306,7 +306,7 @@ namespace ft {
 			_size = n;
 		}
 		iterator insert (iterator position, const bool& val) {
-			Vector copy(*this);
+			vector copy(*this);
 			if (_size >= _capacity) {
 				reserve(!_capacity ? 1 : _capacity * 2);
 			}
@@ -353,7 +353,7 @@ namespace ft {
 			}
 			return first;
 		}
-		void swap (Vector<bool>& x) {
+		void swap (vector<bool>& x) {
 			ft::swap(*this, x);
 		}
 
@@ -369,7 +369,7 @@ namespace ft {
 		const_iterator  end() const   { return const_iterator(_array + _size); }
 
 
-		friend bool operator==(const Vector<bool, Alloc>& lhs, const Vector<bool, Alloc>& rhs) {
+		friend bool operator==(const vector<bool, Alloc>& lhs, const vector<bool, Alloc>& rhs) {
 			if (lhs.size() != rhs.size())
 				return false;
 			iterator itl = lhs.begin();
@@ -380,7 +380,7 @@ namespace ft {
 			}
 			return true;
 		}
-		friend bool operator!=(const Vector<bool, Alloc>& lhs, const Vector<bool, Alloc>& rhs) {
+		friend bool operator!=(const vector<bool, Alloc>& lhs, const vector<bool, Alloc>& rhs) {
 			if (lhs.size() != rhs.size())
 				return true;
 			iterator itl = lhs.begin();
@@ -391,7 +391,7 @@ namespace ft {
 			}
 			return false;
 		}
-		friend bool operator<(const Vector<bool, Alloc>& lhs, const Vector<bool, Alloc>& rhs) {
+		friend bool operator<(const vector<bool, Alloc>& lhs, const vector<bool, Alloc>& rhs) {
 			if (lhs.size() < rhs.size())
 				return true;
 			iterator itl = lhs.begin();
@@ -406,7 +406,7 @@ namespace ft {
 			}
 			return false;
 		}
-		friend bool operator>(const Vector<bool, Alloc>& lhs, const Vector<bool, Alloc>& rhs) {
+		friend bool operator>(const vector<bool, Alloc>& lhs, const vector<bool, Alloc>& rhs) {
 			if (lhs.size() > rhs.size())
 				return true;
 			const_iterator itl = lhs.begin();
@@ -421,7 +421,7 @@ namespace ft {
 			}
 			return false;
 		}
-		friend bool operator<=(const Vector<bool, Alloc>& lhs, const Vector<bool, Alloc>& rhs) {
+		friend bool operator<=(const vector<bool, Alloc>& lhs, const vector<bool, Alloc>& rhs) {
 			if (lhs.size() < rhs.size())
 				return true;
 			iterator itl = lhs.begin();
@@ -436,7 +436,7 @@ namespace ft {
 			}
 			return true;
 		}
-		friend bool operator>=(const Vector<bool, Alloc>& lhs, const Vector<bool, Alloc>& rhs) {
+		friend bool operator>=(const vector<bool, Alloc>& lhs, const vector<bool, Alloc>& rhs) {
 			if (lhs.size() > rhs.size())
 				return true;
 			const_iterator itl = lhs.begin();
@@ -451,7 +451,7 @@ namespace ft {
 			}
 			return true;
 		}
-		friend void swap(Vector<bool,Alloc>& x, Vector<bool,Alloc>& y) {
+		friend void swap(vector<bool,Alloc>& x, vector<bool,Alloc>& y) {
 			ft::swap(x, y);
 		}
     };

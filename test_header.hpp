@@ -1,0 +1,45 @@
+#ifndef STL_CONTAINERS_TEST_HEADER_HPP
+#define STL_CONTAINERS_TEST_HEADER_HPP
+
+void defaultSwap();
+void testSwap();
+void defaultTestModifies();
+void testModifies();
+void defaultTestVector();
+void testVector();
+void defaultClearTest();
+void clearTest();
+void defaultTestPushBack();
+void testPushBack();
+void defaultTestElementAccess();
+void testElementAccess();
+void defaultTestFrontAndBack();
+void testFrontAndBack();
+void defaultTestIteratorVector();
+void testIteratorVector();
+void defaultTestIteratorTwo();
+void testIteratorTwo();
+void defaultTestAssignIterator();
+void testAssignIterator();
+void defaultTestInsertIterator();
+void testInsertIterator();
+void defaultTestEraseIterator();
+void testEraseIterator();
+void defaultTestRelationalOperators();
+void testRelationalOperators();
+void defaultTestReverseIterators();
+void testReverseIterators();
+void defaultTestBoolVector();
+void testBoolVector();
+void defaultTestMap();
+void testMap();
+void defaultTestClearMap();
+void testClearMap();
+void defaultTestMapFindErase();
+void testMapFindErase();
+void defaultTestMapAlgorithm();
+void testMapAlgorithm();
+void defaultTestStack();
+void testStack();
+
+#endif
